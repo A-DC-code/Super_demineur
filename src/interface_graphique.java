@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import javax.swing.JButton;
 
 /**
  *
@@ -16,6 +17,16 @@ public class interface_graphique extends javax.swing.JFrame {
      */
     public interface_graphique() {
         initComponents();
+        int nbLignes = 10;
+        int nbColonnes = 10;
+PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
+for (int i=0; i < nbLignes; i++) {
+for (int j=0; j < nbColonnes; j++ ) {
+    JButton bouton_cellule = new JButton(); // création d'un bouton
+    PanneauGrille.add(bouton_cellule); // ajout au Jpanel PanneauGrille
+}
+}
+
     }
 
     /**
@@ -32,7 +43,7 @@ public class interface_graphique extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        grille_jeu = new javax.swing.JPanel();
+        PanneauGrille = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -54,8 +65,9 @@ public class interface_graphique extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 540, -1));
 
-        grille_jeu.setLayout(new java.awt.GridLayout(10, 10));
-        getContentPane().add(grille_jeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 350, 240));
+        PanneauGrille.setBackground(new java.awt.Color(150, 242, 242));
+        PanneauGrille.setLayout(new java.awt.GridLayout(10, 10));
+        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 340, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -87,7 +99,7 @@ public class interface_graphique extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel grille_jeu;
+    private javax.swing.JPanel PanneauGrille;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
