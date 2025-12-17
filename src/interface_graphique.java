@@ -63,27 +63,24 @@ private void clicCellule(int ligne, int colonne) {
     mettreAJourAffichage();
 
     if (grille.getPresenceBombe(ligne, colonne)) {
-        JOptionPane.showMessageDialog(this, "💥 Bombe ! Partie perdue");
+        JOptionPane.showMessageDialog(this, " Bombe ! Partie perdue");
         afficherToutesLesBombes();
     } 
     else if (grille.toutesCellulesRevelees()) {
-        JOptionPane.showMessageDialog(this, "🎉 Victoire !");
+        JOptionPane.showMessageDialog(this, " Victoire !");
     }
 }
 private void mettreAJourAffichage() {
-
-    String[] lignes = grille.toString().split("\n");
-
     for (int i = 0; i < nbLignes; i++) {
-        String[] cellules = lignes[i + 1].split(" ");
-
         for (int j = 0; j < nbColonnes; j++) {
-            String val = cellules[j + 2];
+            String val = grille.getAffichageCellule(i, j);
             boutons[i][j].setText(val);
             boutons[i][j].setEnabled(val.equals("?"));
         }
     }
 }
+
+
 private void afficherToutesLesBombes() {
 
     for (int i = 0; i < nbLignes; i++) {
@@ -123,7 +120,7 @@ private void afficherToutesLesBombes() {
                 bouton_commencerActionPerformed(evt);
             }
         });
-        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 460, -1, -1));
+        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, -1, -1));
 
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setLayout(new java.awt.GridLayout(1, 3));
@@ -141,13 +138,13 @@ private void afficherToutesLesBombes() {
 
         PanneauGrille.setBackground(new java.awt.Color(150, 242, 242));
         PanneauGrille.setLayout(new java.awt.GridLayout(10, 10));
-        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 340, 300));
+        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 470, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bouton_commencerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton_commencerActionPerformed
-initialiserJeu()
+initialiserJeu();
     }//GEN-LAST:event_bouton_commencerActionPerformed
 
     /**

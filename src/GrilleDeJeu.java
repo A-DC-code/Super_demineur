@@ -208,5 +208,9 @@ public class GrilleDeJeu {
         System.out.println("Après révélation (2,2) :");
         System.out.println(g);
     }
+    public String getAffichageCellule(int i, int j) {
+    return matriceCellules[i][j].toString();
+}
+
 }
 
