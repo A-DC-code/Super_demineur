@@ -32,25 +32,7 @@ public class interface_graphique extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        A1 = new javax.swing.JButton();
-        B1 = new javax.swing.JButton();
-        C1 = new javax.swing.JButton();
-        D1 = new javax.swing.JButton();
-        E1 = new javax.swing.JButton();
-        F1 = new javax.swing.JButton();
-        G1 = new javax.swing.JButton();
-        H1 = new javax.swing.JButton();
-        I1 = new javax.swing.JButton();
-        J1 = new javax.swing.JButton();
-        K1 = new javax.swing.JButton();
-        L1 = new javax.swing.JButton();
-        M1 = new javax.swing.JButton();
-        N1 = new javax.swing.JButton();
-        O1 = new javax.swing.JButton();
-        P1 = new javax.swing.JButton();
-        Q1 = new javax.swing.JButton();
-        R1 = new javax.swing.JButton();
+        grille_jeu = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -72,84 +54,11 @@ public class interface_graphique extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 540, -1));
 
-        jPanel2.setLayout(new java.awt.GridLayout(1, 18));
-
-        A1.setText("A1");
-        A1.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                A1ComponentShown(evt);
-            }
-        });
-        jPanel2.add(A1);
-
-        B1.setText("B2");
-        B1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                B1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(B1);
-
-        C1.setText("C1");
-        jPanel2.add(C1);
-
-        D1.setText("jButton5");
-        jPanel2.add(D1);
-
-        E1.setText("jButton6");
-        jPanel2.add(E1);
-
-        F1.setText("jButton7");
-        jPanel2.add(F1);
-
-        G1.setText("jButton8");
-        jPanel2.add(G1);
-
-        H1.setText("jButton9");
-        jPanel2.add(H1);
-
-        I1.setText("jButton10");
-        jPanel2.add(I1);
-
-        J1.setText("jButton11");
-        jPanel2.add(J1);
-
-        K1.setText("jButton12");
-        jPanel2.add(K1);
-
-        L1.setText("jButton13");
-        jPanel2.add(L1);
-
-        M1.setText("jButton14");
-        jPanel2.add(M1);
-
-        N1.setText("jButton15");
-        jPanel2.add(N1);
-
-        O1.setText("jButton16");
-        jPanel2.add(O1);
-
-        P1.setText("jButton17");
-        jPanel2.add(P1);
-
-        Q1.setText("jButton18");
-        jPanel2.add(Q1);
-
-        R1.setText("jButton19");
-        jPanel2.add(R1);
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 670, 40));
+        grille_jeu.setLayout(new java.awt.GridLayout(10, 10));
+        getContentPane().add(grille_jeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 350, 240));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void B1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_B1ActionPerformed
-
-    private void A1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_A1ComponentShown
-        // TODO add your handling code here:
-    }//GEN-LAST:event_A1ComponentShown
 
     /**
      * @param args the command line arguments
@@ -174,32 +83,15 @@ public class interface_graphique extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new interface_graphique().setVisible(true));
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton A1;
-    private javax.swing.JButton B1;
-    private javax.swing.JButton C1;
-    private javax.swing.JButton D1;
-    private javax.swing.JButton E1;
-    private javax.swing.JButton F1;
-    private javax.swing.JButton G1;
-    private javax.swing.JButton H1;
-    private javax.swing.JButton I1;
-    private javax.swing.JButton J1;
-    private javax.swing.JButton K1;
-    private javax.swing.JButton L1;
-    private javax.swing.JButton M1;
-    private javax.swing.JButton N1;
-    private javax.swing.JButton O1;
-    private javax.swing.JButton P1;
-    private javax.swing.JButton Q1;
-    private javax.swing.JButton R1;
+    private javax.swing.JPanel grille_jeu;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
