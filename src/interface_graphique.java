@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 import javax.swing.JButton;
+import java.awt.GridLayout;
+import java.awt.Font;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,23 +14,89 @@ import javax.swing.JButton;
 public class interface_graphique extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(interface_graphique.class.getName());
+private GrilleDeJeu grille;
+private JButton[][] boutons;
+
+private int nbLignes = 10;
+private int nbColonnes = 10;
+private int nbBombes = 15;
 
     /**
      * Creates new form interface_graphique
      */
-    public interface_graphique() {
-        initComponents();
-        int nbLignes = 10;
-        int nbColonnes = 10;
-PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
-for (int i=0; i < nbLignes; i++) {
-for (int j=0; j < nbColonnes; j++ ) {
-    JButton bouton_cellule = new JButton(); // création d'un bouton
-    PanneauGrille.add(bouton_cellule); // ajout au Jpanel PanneauGrille
+public interface_graphique() {
+    initComponents();
 }
+private void initialiserJeu() {
+
+    grille = new GrilleDeJeu(nbLignes, nbColonnes, nbBombes);
+    grille.placerBombesAleatoirement();
+    grille.calculerBombesAdjacentes();
+
+    PanneauGrille.removeAll();
+    PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
+
+    boutons = new JButton[nbLignes][nbColonnes];
+
+    for (int i = 0; i < nbLignes; i++) {
+        for (int j = 0; j < nbColonnes; j++) {
+
+            JButton bouton = new JButton("?");
+            bouton.setFont(new Font("Arial", Font.BOLD, 16));
+
+            final int ligne = i;
+            final int colonne = j;
+
+            bouton.addActionListener(e -> clicCellule(ligne, colonne));
+
+            boutons[i][j] = bouton;
+            PanneauGrille.add(bouton);
+        }
+    }
+
+    PanneauGrille.revalidate();
+    PanneauGrille.repaint();
+}
+private void clicCellule(int ligne, int colonne) {
+
+    grille.revelerCellule(ligne, colonne);
+    mettreAJourAffichage();
+
+    if (grille.getPresenceBombe(ligne, colonne)) {
+        JOptionPane.showMessageDialog(this, "💥 Bombe ! Partie perdue");
+        afficherToutesLesBombes();
+    } 
+    else if (grille.toutesCellulesRevelees()) {
+        JOptionPane.showMessageDialog(this, "🎉 Victoire !");
+    }
+}
+private void mettreAJourAffichage() {
+
+    String[] lignes = grille.toString().split("\n");
+
+    for (int i = 0; i < nbLignes; i++) {
+        String[] cellules = lignes[i + 1].split(" ");
+
+        for (int j = 0; j < nbColonnes; j++) {
+            String val = cellules[j + 2];
+            boutons[i][j].setText(val);
+            boutons[i][j].setEnabled(val.equals("?"));
+        }
+    }
+}
+private void afficherToutesLesBombes() {
+
+    for (int i = 0; i < nbLignes; i++) {
+        for (int j = 0; j < nbColonnes; j++) {
+
+            if (grille.getPresenceBombe(i, j)) {
+                boutons[i][j].setText("B");
+            }
+            boutons[i][j].setEnabled(false);
+        }
+    }
 }
 
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +107,7 @@ for (int j=0; j < nbColonnes; j++ ) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        bouton_commencer = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -48,8 +117,13 @@ for (int j=0; j < nbColonnes; j++ ) {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Commencer");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 460, -1, -1));
+        bouton_commencer.setText("Commencer");
+        bouton_commencer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bouton_commencerActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 460, -1, -1));
 
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setLayout(new java.awt.GridLayout(1, 3));
@@ -71,6 +145,10 @@ for (int j=0; j < nbColonnes; j++ ) {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bouton_commencerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton_commencerActionPerformed
+initialiserJeu()
+    }//GEN-LAST:event_bouton_commencerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -98,9 +176,10 @@ for (int j=0; j < nbColonnes; j++ ) {
         
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanneauGrille;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton bouton_commencer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
