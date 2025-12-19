@@ -33,7 +33,7 @@ public class interface_graphique extends javax.swing.JFrame {
         this.nbLignes = nbLignes;
         this.nbColonnes = nbColonnes;
         this.nbBombes = nbBombes;
-
+    }
     private void initialiserJeu() {
 
         grille = new GrilleDeJeu(nbLignes, nbColonnes, nbBombes);
@@ -166,14 +166,19 @@ public class interface_graphique extends javax.swing.JFrame {
         jLabel2.setText("Jeu du Démineur");
         jPanel1.add(jLabel2);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 600, 60));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 80, 170, 250));
 
         PanneauGrille.setBackground(new java.awt.Color(0, 153, 0));
-        PanneauGrille.setLayout(new java.awt.GridLayout(10, 10));
-        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 470, 390));
+        PanneauGrille.setLayout(new java.awt.GridLayout(10, 10, 25, 25));
+        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 600, 600));
 
         bouton_commencer.setText("commencer");
-        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 530, -1, -1));
+        bouton_commencer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bouton_commencerActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 570, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -185,29 +190,6 @@ initialiserJeu();
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new interface_graphique().setVisible(true));
-        
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanneauGrille;
