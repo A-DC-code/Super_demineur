@@ -71,13 +71,13 @@
         <Property name="rows" type="int" value="10"/>
       </Layout>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="bouton_commencer">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="text" type="java.lang.String" value="commencer"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="420" y="520" width="-1" height="-1"/>
+          <AbsoluteConstraints x="430" y="530" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
