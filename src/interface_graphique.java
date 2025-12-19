@@ -28,7 +28,7 @@ public class interface_graphique extends javax.swing.JFrame {
         this.nbColonnes = nbColonnes;
         this.nbBombes = nbBombes;
         this.bombesRestantes = nbBombes; // Initialisation
-        jLabel1.setText("Bombes restantes: " + bombesRestantes); // Mise à jour du label
+        jLabel1.setText("Bombes restantes: " + bombesRestantes);
     }
 
     private void initialiserJeu() {
@@ -146,6 +146,7 @@ public class interface_graphique extends javax.swing.JFrame {
 
         PanneauGrille = new javax.swing.JPanel();
         bouton_commencer = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -162,6 +163,9 @@ public class interface_graphique extends javax.swing.JFrame {
         });
         getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 580, -1, -1));
 
+        jLabel1.setText("Bombes restantes: ");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 120, 170, 250));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -176,6 +180,7 @@ initialiserJeu();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanneauGrille;
     private javax.swing.JButton bouton_commencer;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
 }

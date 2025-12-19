@@ -8,15 +8,12 @@
  * @author zouhaib mahamoud
  */
 public class AccueilDemineur extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AccueilDemineur.class.getName());
 
-    /**
-     * Creates new form AccueilDemineur
-     */
     public AccueilDemineur() {
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); 
     }
 
     /**
@@ -49,6 +46,11 @@ public class AccueilDemineur extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 300, -1));
 
         bouton_commencer.setText("Commencer");
+        bouton_commencer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bouton_commencerActionPerformed(evt);
+            }
+        });
         getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, -1, -1));
 
         jLabel2.setText("Niveau: ");
@@ -60,31 +62,47 @@ public class AccueilDemineur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bouton_commencerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton_commencerActionPerformed
+                                    
+
+        String niveau = combo_niveau.getSelectedItem().toString();
+        int lignes;
+        int colonnes;
+        int bombes;
+
+        if (niveau.equals("Facile")) {
+            lignes = 8;
+            colonnes = 8;
+            bombes = 10;
+        } else if (niveau.equals("Moyen")) {
+            lignes = 10;
+            colonnes = 10;
+            bombes = 15;
+        } else { // Difficile
+            lignes = 12;
+            colonnes = 12;
+            bombes = 25;
+        }
+
+        // Ouvre la fenêtre de jeu avec ces paramètres
+        interface_graphique fenetreJeu = new interface_graphique(lignes, colonnes, bombes);
+        fenetreJeu.setVisible(true);
+
+        // Ferme l'écran d'accueil
+        this.dispose();
+
+    }//GEN-LAST:event_bouton_commencerActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AccueilDemineur().setVisible(true);
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AccueilDemineur().setVisible(true));
+        });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bouton_commencer;
     private javax.swing.JComboBox<String> combo_niveau;
