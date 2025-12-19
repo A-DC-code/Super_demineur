@@ -107,8 +107,8 @@ private void afficherToutesLesBombes() {
         bouton_commencer = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         PanneauGrille = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -120,7 +120,7 @@ private void afficherToutesLesBombes() {
                 bouton_commencerActionPerformed(evt);
             }
         });
-        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, -1, -1));
+        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 530, -1, -1));
 
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setLayout(new java.awt.GridLayout(1, 3));
@@ -128,17 +128,17 @@ private void afficherToutesLesBombes() {
         jLabel1.setText("Score Maximum");
         jPanel1.add(jLabel1);
 
-        jLabel2.setText("Jeu du Démineur");
-        jPanel1.add(jLabel2);
-
         jLabel3.setText("nombre");
         jPanel1.add(jLabel3);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 540, -1));
+        jLabel2.setText("Jeu du Démineur");
+        jPanel1.add(jLabel2);
 
-        PanneauGrille.setBackground(new java.awt.Color(150, 242, 242));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 600, 60));
+
+        PanneauGrille.setBackground(new java.awt.Color(0, 153, 0));
         PanneauGrille.setLayout(new java.awt.GridLayout(10, 10));
-        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 470, 390));
+        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 470, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
