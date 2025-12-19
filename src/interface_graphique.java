@@ -75,6 +75,7 @@ private void mettreAJourAffichage() {
         for (int j = 0; j < nbColonnes; j++) {
             String val = grille.getAffichageCellule(i, j);
             boutons[i][j].setText(val);
+            boutons[i][j].setBackground(new java.awt.Color(100, 255, 100));
             boutons[i][j].setEnabled(val.equals("?"));
         }
     }
@@ -88,6 +89,7 @@ private void afficherToutesLesBombes() {
 
             if (grille.getPresenceBombe(i, j)) {
                 boutons[i][j].setText("B");
+                boutons[i][j].setBackground(new java.awt.Color(255, 0, 0));
             }
             boutons[i][j].setEnabled(false);
         }
