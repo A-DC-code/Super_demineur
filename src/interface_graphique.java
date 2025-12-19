@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.Font;
 import javax.swing.JOptionPane;
+import java.awt.Color;
+
 
 /**
  *
@@ -43,7 +45,7 @@ private void initialiserJeu() {
 
             JButton bouton = new JButton("?");
             bouton.setFont(new Font("Arial", Font.BOLD, 16));
-
+            
             final int ligne = i;
             final int colonne = j;
 
@@ -74,9 +76,44 @@ private void mettreAJourAffichage() {
     for (int i = 0; i < nbLignes; i++) {
         for (int j = 0; j < nbColonnes; j++) {
             String val = grille.getAffichageCellule(i, j);
+            System.out.println(val);
+            
+            if (val.equals("B")) {
+    boutons[i][j].setBackground(Color.RED);
+}
+            
+else if (val.equals("1")) {
+    boutons[i][j].setBackground(new java.awt.Color(0, 255, 255));
+}
+else if (val.equals("2")) {
+    boutons[i][j].setBackground(new java.awt.Color(0, 200, 255));
+}
+else if (val.equals("3")) {
+    boutons[i][j].setBackground(new java.awt.Color(0, 160, 255));
+}
+else if (val.equals("4")) {
+    boutons[i][j].setBackground(new java.awt.Color(0, 50, 255));
+}
+else if (val.equals("5")) {
+    boutons[i][j].setBackground(new java.awt.Color(80, 0, 255));
+}
+else if (val.equals("6")) {
+    boutons[i][j].setBackground(new java.awt.Color(255, 0, 165));
+}
+else if (val.equals("7")) {
+    boutons[i][j].setBackground(new java.awt.Color(255, 0, 255));
+}
+else if (val.equals("8")) {
+    boutons[i][j].setBackground(new java.awt.Color(255, 0, 100));
+}
+
             boutons[i][j].setText(val);
-            boutons[i][j].setBackground(new java.awt.Color(100, 255, 100));
-            boutons[i][j].setEnabled(val.equals("?"));
+            if (!val.equals("?")) {
+    for (var al : boutons[i][j].getActionListeners()) {
+        boutons[i][j].removeActionListener(al);
+    }
+}
+
         }
     }
 }
