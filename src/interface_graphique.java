@@ -9,45 +9,40 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 
 
-/**
- *
- * @author chalu
- */
 public class interface_graphique extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(interface_graphique.class.getName());
     private GrilleDeJeu grille;
     private JButton[][] boutons;
-
-
     private int nbLignes;
     private int nbColonnes;
     private int nbBombes;
+    private int bombesRestantes; // Ajouté pour suivre les bombes restantes (non utilisé ici car pas de drapeaux, mais peut être étendu)
 
-    
-        /**
-         * Creates new form interface_graphique
-         */
+    /**
+   
+     */
     public interface_graphique(int nbLignes, int nbColonnes, int nbBombes) {
         initComponents();
         this.nbLignes = nbLignes;
         this.nbColonnes = nbColonnes;
         this.nbBombes = nbBombes;
+        this.bombesRestantes = nbBombes; // Initialisation
+        jLabel1.setText("Bombes restantes: " + bombesRestantes); // Mise à jour du label
     }
-    private void initialiserJeu() {
 
+    private void initialiserJeu() {
         grille = new GrilleDeJeu(nbLignes, nbColonnes, nbBombes);
         grille.placerBombesAleatoirement();
         grille.calculerBombesAdjacentes();
 
         PanneauGrille.removeAll();
-        PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
+        PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes)); // Suppression des gaps pour cohérence, ou ajoutez-les si souhaité
 
         boutons = new JButton[nbLignes][nbColonnes];
 
         for (int i = 0; i < nbLignes; i++) {
             for (int j = 0; j < nbColonnes; j++) {
-
                 JButton bouton = new JButton("?");
                 bouton.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -64,80 +59,81 @@ public class interface_graphique extends javax.swing.JFrame {
         PanneauGrille.revalidate();
         PanneauGrille.repaint();
     }
-    private void clicCellule(int ligne, int colonne) {
 
+    private void clicCellule(int ligne, int colonne) {
         grille.revelerCellule(ligne, colonne);
         mettreAJourAffichage();
 
         if (grille.getPresenceBombe(ligne, colonne)) {
-            JOptionPane.showMessageDialog(this, " Bombe ! Partie perdue");
+            JOptionPane.showMessageDialog(this, "Bombe ! Partie perdue");
             afficherToutesLesBombes();
-        } 
-        else if (grille.toutesCellulesRevelees()) {
-            JOptionPane.showMessageDialog(this, " Victoire !");
+            desactiverTousBoutons(); // Désactiver après défaite
+        } else if (grille.toutesCellulesRevelees()) {
+            JOptionPane.showMessageDialog(this, "Victoire !");
+            desactiverTousBoutons(); // Désactiver après victoire
         }
     }
+
     private void mettreAJourAffichage() {
         for (int i = 0; i < nbLignes; i++) {
             for (int j = 0; j < nbColonnes; j++) {
                 String val = grille.getAffichageCellule(i, j);
-                System.out.println(val);
-
-                if (val.equals("B")) {
-        boutons[i][j].setBackground(Color.RED);
-    }
-
-    else if (val.equals("1")) {
-        boutons[i][j].setBackground(new java.awt.Color(0, 255, 255));
-    }
-    else if (val.equals("2")) {
-        boutons[i][j].setBackground(new java.awt.Color(0, 200, 255));
-    }
-    else if (val.equals("3")) {
-        boutons[i][j].setBackground(new java.awt.Color(0, 160, 255));
-    }
-    else if (val.equals("4")) {
-        boutons[i][j].setBackground(new java.awt.Color(0, 50, 255));
-    }
-    else if (val.equals("5")) {
-        boutons[i][j].setBackground(new java.awt.Color(80, 0, 255));
-    }
-    else if (val.equals("6")) {
-        boutons[i][j].setBackground(new java.awt.Color(255, 0, 165));
-    }
-    else if (val.equals("7")) {
-        boutons[i][j].setBackground(new java.awt.Color(255, 0, 255));
-    }
-    else if (val.equals("8")) {
-        boutons[i][j].setBackground(new java.awt.Color(255, 0, 100));
-    }
-
                 boutons[i][j].setText(val);
-                if (!val.equals("?")) {
-        for (var al : boutons[i][j].getActionListeners()) {
-            boutons[i][j].removeActionListener(al);
-        }
-    }
 
+                if (val.equals("?")) {
+                    boutons[i][j].setBackground(new Color(100, 255, 100));
+                } else if (val.equals("B")) {
+                    boutons[i][j].setBackground(Color.RED);
+                } else if (val.equals("0")) { // Gérer les cellules vides (0 bombes adjacentes)
+                    boutons[i][j].setText(""); // Texte vide
+                    boutons[i][j].setBackground(Color.WHITE);
+                } else if (val.equals("1")) {
+                    boutons[i][j].setBackground(new Color(0, 255, 255));
+                } else if (val.equals("2")) {
+                    boutons[i][j].setBackground(new Color(0, 200, 255));
+                } else if (val.equals("3")) {
+                    boutons[i][j].setBackground(new Color(0, 160, 255));
+                } else if (val.equals("4")) {
+                    boutons[i][j].setBackground(new Color(0, 50, 255));
+                } else if (val.equals("5")) {
+                    boutons[i][j].setBackground(new Color(80, 0, 255));
+                } else if (val.equals("6")) {
+                    boutons[i][j].setBackground(new Color(255, 0, 165));
+                } else if (val.equals("7")) {
+                    boutons[i][j].setBackground(new Color(255, 0, 255));
+                } else if (val.equals("8")) {
+                    boutons[i][j].setBackground(new Color(255, 0, 100));
+                }
+
+                // Désactiver le clic si révélé
+                if (!val.equals("?")) {
+                    boutons[i][j].setEnabled(false);
+                }
             }
         }
     }
 
-
+   
     private void afficherToutesLesBombes() {
-
         for (int i = 0; i < nbLignes; i++) {
             for (int j = 0; j < nbColonnes; j++) {
-
                 if (grille.getPresenceBombe(i, j)) {
                     boutons[i][j].setText("B");
-                    boutons[i][j].setBackground(new java.awt.Color(255, 0, 0));
+                    boutons[i][j].setBackground(Color.RED);
+                    boutons[i][j].setEnabled(false);
                 }
+            }
+        }
+    }
+
+    // Méthode ajoutée pour désactiver tous les boutons après fin de partie
+    private void desactiverTousBoutons() {
+        for (int i = 0; i < nbLignes; i++) {
+            for (int j = 0; j < nbColonnes; j++) {
                 boutons[i][j].setEnabled(false);
             }
         }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,29 +144,15 @@ public class interface_graphique extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         PanneauGrille = new javax.swing.JPanel();
         bouton_commencer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.setLayout(new java.awt.GridLayout(1, 3));
-
-        jLabel1.setText("Bombes restantes: ");
-        jPanel1.add(jLabel1);
-
-        jLabel2.setText("Jeu du Démineur");
-        jPanel1.add(jLabel2);
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 80, 170, 250));
-
         PanneauGrille.setBackground(new java.awt.Color(0, 153, 0));
         PanneauGrille.setLayout(new java.awt.GridLayout(10, 10, 25, 25));
-        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 600, 600));
+        getContentPane().add(PanneauGrille, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 550, 550));
 
         bouton_commencer.setText("commencer");
         bouton_commencer.addActionListener(new java.awt.event.ActionListener() {
@@ -178,7 +160,7 @@ public class interface_graphique extends javax.swing.JFrame {
                 bouton_commencerActionPerformed(evt);
             }
         });
-        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 570, -1, -1));
+        getContentPane().add(bouton_commencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 580, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -194,8 +176,6 @@ initialiserJeu();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanneauGrille;
     private javax.swing.JButton bouton_commencer;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
 }
