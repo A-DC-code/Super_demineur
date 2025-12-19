@@ -126,7 +126,7 @@ private void afficherToutesLesBombes() {
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setLayout(new java.awt.GridLayout(1, 3));
 
-        jLabel1.setText("Score Maximum");
+        jLabel1.setText("Bombes restantes: ");
         jPanel1.add(jLabel1);
 
         jLabel2.setText("Jeu du Démineur");
