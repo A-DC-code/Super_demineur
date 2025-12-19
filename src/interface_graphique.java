@@ -129,9 +129,6 @@ private void afficherToutesLesBombes() {
         jLabel1.setText("Bombes restantes: ");
         jPanel1.add(jLabel1);
 
-        jLabel3.setText("nombre");
-        jPanel1.add(jLabel3);
-
         jLabel2.setText("Jeu du Démineur");
         jPanel1.add(jLabel2);
 
