@@ -109,7 +109,6 @@ private void afficherToutesLesBombes() {
         bouton_commencer = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         PanneauGrille = new javax.swing.JPanel();
 
@@ -129,9 +128,6 @@ private void afficherToutesLesBombes() {
 
         jLabel1.setText("Score Maximum");
         jPanel1.add(jLabel1);
-
-        jLabel3.setText("nombre");
-        jPanel1.add(jLabel3);
 
         jLabel2.setText("Jeu du Démineur");
         jPanel1.add(jLabel2);
@@ -181,7 +177,6 @@ initialiserJeu();
     private javax.swing.JButton bouton_commencer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
