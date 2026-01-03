@@ -65,7 +65,9 @@ public class Cellule {
         }
         presenceDrapeau = !presenceDrapeau;
     }
-
+    public boolean estDevoilee() {
+        return devoilee;
+    }
 
     @Override
     public String toString() {

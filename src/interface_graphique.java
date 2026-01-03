@@ -10,7 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-
+import java.util.prefs.Preferences;
 
 
 
@@ -30,7 +30,9 @@ public class interface_graphique extends javax.swing.JFrame {
     private static final int ESPACE_CASES = 1;     
     private static final int TAILLE_MIN_CASE = 18; 
     private boolean partieTerminee = false;
-    
+    private int numeroTentative = 0;
+    private Preferences preferences = Preferences.userNodeForPackage(interface_graphique.class);
+    private String cleRecord; 
     
     
     /**
@@ -44,8 +46,11 @@ public class interface_graphique extends javax.swing.JFrame {
         nbr_de_bombe.setText("nombre de Bombes: " + nbBombes);
         drapeauxRestants = nbBombes;
         drapeaux.setText("Drapeaux  : " + drapeauxRestants);
+        cleRecord = "record_" + nbLignes + "x" + nbColonnes + "_" + nbBombes;
+        afficherRecord();
         initialiserJeu();
         bouton_recommencer.setVisible(false);
+        
     }
     
 
@@ -61,7 +66,7 @@ public class interface_graphique extends javax.swing.JFrame {
         drapeauxRestants = nbBombes;
         drapeaux.setText("Drapeaux  : " + drapeauxRestants);
         reinitialiserChrono();
-
+        mettreAJourProgression();
         PanneauGrille.removeAll();
         int tailleCase = calculerTailleCase();
 
@@ -150,6 +155,44 @@ public class interface_graphique extends javax.swing.JFrame {
         timer.start();
     }
     
+    private void mettreAJourProgression() {
+    if (grille == null) return;
+
+    int pourcentage = grille.PourcentageAvancement(); 
+
+    barreProgression.setValue(pourcentage);
+    barreProgression.setString(pourcentage + "%");
+    labelProgression.setText("Progression : " + pourcentage + "%");
+}
+
+    
+    private String formaterTemps(int secondes) {
+        int minutes = secondes / 60;
+        int reste = secondes % 60;
+        return String.format("%02d:%02d", minutes, reste);
+    }
+
+    private void ajouterTentativeHistorique(String resultat) {
+        numeroTentative++;
+
+        int pourcentage;
+        if (resultat.equals("Victoire")) {
+            pourcentage = 100;
+        } else {
+            pourcentage = grille.PourcentageAvancement();
+        }
+
+        String tempsTexte = formaterTemps(secondesEcoulees);
+
+        zone_historique.append(
+            "Tentative #" + numeroTentative +
+            " | " + resultat +
+            " | Temps: " + tempsTexte +
+            " | Avancement: " + pourcentage + "%\n"
+        );
+    }
+
+    
     private int calculerTailleCase() {
         int taille = (TAILLE_PLATEAU - (nbColonnes - 1) * ESPACE_CASES) / nbColonnes;
         if (taille < TAILLE_MIN_CASE) {
@@ -158,7 +201,8 @@ public class interface_graphique extends javax.swing.JFrame {
         return taille;
     }
     
-    private void reinitialiserChrono() {
+  
+    private void reinitialiserChrono() {   
         secondesEcoulees = 0;
         temps.setText("Temps : 0 s");
 
@@ -200,18 +244,22 @@ public class interface_graphique extends javax.swing.JFrame {
         }
         grille.revelerCellule(ligne, colonne);
         mettreAJourAffichage();
+        mettreAJourProgression();
 
         if (grille.getPresenceBombe(ligne, colonne)) {
             JOptionPane.showMessageDialog(this, "Bombe ! Partie perdue");
             animationRevelationBombesProgressive();           
             partieTerminee = true;
             arreterChrono();
+            ajouterTentativeHistorique("Défaite");
             desactiverTousBoutons();
             bouton_recommencer.setVisible(true);
         } else if (grille.toutesCellulesRevelees()) {
             JOptionPane.showMessageDialog(this, "Victoire !");
             partieTerminee = true;
             arreterChrono();
+            MeilleurRecordenregistrer();
+            ajouterTentativeHistorique("Victoire");
             desactiverTousBoutons();
             bouton_recommencer.setVisible(true);
         }
@@ -299,6 +347,24 @@ public class interface_graphique extends javax.swing.JFrame {
 
         mettreAJourAffichage();
     }
+    private void afficherRecord() {
+        int recordSecondes = preferences.getInt(cleRecord, -1);
+
+        if (recordSecondes == -1) {
+            meilleur_temps.setText("Meilleur : --:--");
+        } else {
+            meilleur_temps.setText("Meilleur : " + formaterTemps(recordSecondes));
+        }
+    }
+
+    private void MeilleurRecordenregistrer() {
+        int recordSecondes = preferences.getInt(cleRecord, -1);
+
+        if (recordSecondes == -1 || secondesEcoulees < recordSecondes) {
+            preferences.putInt(cleRecord, secondesEcoulees);
+            afficherRecord();
+        }
+    }
 
 
     /**
@@ -317,6 +383,12 @@ public class interface_graphique extends javax.swing.JFrame {
         temps = new javax.swing.JLabel();
         bouton_menu = new javax.swing.JButton();
         bouton_info = new javax.swing.JButton();
+        panel_historique = new javax.swing.JPanel();
+        javax.swing.JScrollPane scroll_historique = new javax.swing.JScrollPane();
+        zone_historique = new javax.swing.JTextArea();
+        barreProgression = new javax.swing.JProgressBar();
+        labelProgression = new javax.swing.JLabel();
+        meilleur_temps = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -335,13 +407,13 @@ public class interface_graphique extends javax.swing.JFrame {
         getContentPane().add(bouton_recommencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 580, -1, -1));
 
         nbr_de_bombe.setText("Nombre de Bombes : ");
-        getContentPane().add(nbr_de_bombe, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+        getContentPane().add(nbr_de_bombe, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, -1, -1));
 
         drapeaux.setText("Drapeaux");
-        getContentPane().add(drapeaux, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 50, -1, -1));
+        getContentPane().add(drapeaux, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 60, -1, -1));
 
         temps.setText("temps");
-        getContentPane().add(temps, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, -1, -1));
+        getContentPane().add(temps, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, -1, -1));
 
         bouton_menu.setText("Menu");
         bouton_menu.addActionListener(new java.awt.event.ActionListener() {
@@ -351,13 +423,34 @@ public class interface_graphique extends javax.swing.JFrame {
         });
         getContentPane().add(bouton_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, -1, -1));
 
-        bouton_info.setText("Info");
+        bouton_info.setText("Aide");
         bouton_info.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bouton_infoActionPerformed(evt);
             }
         });
-        getContentPane().add(bouton_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, -1, -1));
+        getContentPane().add(bouton_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, -1, -1));
+
+        panel_historique.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        zone_historique.setColumns(20);
+        zone_historique.setRows(5);
+        scroll_historique.setViewportView(zone_historique);
+
+        panel_historique.add(scroll_historique, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 110));
+        scroll_historique.getAccessibleContext().setAccessibleName("scroll_historique ");
+        scroll_historique.getAccessibleContext().setAccessibleDescription("scroll_historique ");
+
+        getContentPane().add(panel_historique, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 400, 310, 100));
+
+        barreProgression.setForeground(new java.awt.Color(0, 204, 204));
+        getContentPane().add(barreProgression, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, 20));
+
+        labelProgression.setText("Progression :");
+        getContentPane().add(labelProgression, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
+
+        meilleur_temps.setText("Meilleur_temps");
+        getContentPane().add(meilleur_temps, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 370, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -404,12 +497,17 @@ public class interface_graphique extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanneauGrille;
+    private javax.swing.JProgressBar barreProgression;
     private javax.swing.JButton bouton_info;
     private javax.swing.JButton bouton_menu;
     private javax.swing.JButton bouton_recommencer;
     private javax.swing.JLabel drapeaux;
+    private javax.swing.JLabel labelProgression;
+    private javax.swing.JLabel meilleur_temps;
     private javax.swing.JLabel nbr_de_bombe;
+    private javax.swing.JPanel panel_historique;
     private javax.swing.JLabel temps;
+    private javax.swing.JTextArea zone_historique;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -106,9 +106,7 @@ public class GrilleDeJeu {
         }
     }
 
-    // -----------------------------
-    // REVELER UNE CELLULE (AVEC PROPAGATION)
-    // -----------------------------
+
     public void revelerCellule(int ligne, int colonne) {
 
         // Vérifier limites
@@ -225,6 +223,53 @@ public class GrilleDeJeu {
         return matriceCellules[ligne][colonne].getPresenceDrapeau();
     }
     
+    public int obtenirNombreCellulesSansBombe() {
+        int total = 0;
+        for (int ligne = 0; ligne < nbLignes; ligne++) {
+            for (int colonne = 0; colonne < nbColonnes; colonne++) {
+                if (!matriceCellules[ligne][colonne].getPresenceBombe()) {
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
+
+    public int obtenirNombreCellulesReveleesSansBombe() {
+        int revelees = 0;
+        for (int ligne = 0; ligne < nbLignes; ligne++) {
+            for (int colonne = 0; colonne < nbColonnes; colonne++) {
+                if (!matriceCellules[ligne][colonne].getPresenceBombe()
+                        && matriceCellules[ligne][colonne].estDevoilee()) {
+                    revelees++;
+                }
+            }
+        }
+        return revelees;
+    }
+
+    public int PourcentageAvancement() {
+        int casesSureesTotales = (nbLignes * nbColonnes) - nbBombes;
+        if (casesSureesTotales <= 0) return 0;
+
+        int casesSureesRevelees = 0;
+
+        for (int ligne = 0; ligne < nbLignes; ligne++) {
+            for (int colonne = 0; colonne < nbColonnes; colonne++) {
+                Cellule cellule = matriceCellules[ligne][colonne];
+
+                if (!cellule.getPresenceBombe() && cellule.estDevoilee()) {
+                    casesSureesRevelees++;
+                }
+            }
+        }
+
+        
+        return (int) Math.round((casesSureesRevelees * 100.0) / casesSureesTotales);
+    }
+
+
+
     public static void main(String[] args) {
 
         GrilleDeJeu g = new GrilleDeJeu(5, 5, 5);
