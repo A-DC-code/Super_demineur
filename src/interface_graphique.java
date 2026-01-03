@@ -316,6 +316,7 @@ public class interface_graphique extends javax.swing.JFrame {
         drapeaux = new javax.swing.JLabel();
         temps = new javax.swing.JLabel();
         bouton_menu = new javax.swing.JButton();
+        bouton_info = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -350,6 +351,14 @@ public class interface_graphique extends javax.swing.JFrame {
         });
         getContentPane().add(bouton_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, -1, -1));
 
+        bouton_info.setText("Info");
+        bouton_info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bouton_infoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(bouton_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -364,12 +373,38 @@ public class interface_graphique extends javax.swing.JFrame {
         this.dispose();                  
     }//GEN-LAST:event_bouton_menuActionPerformed
 
+    private void bouton_infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton_infoActionPerformed
+    String message =
+            "🎮 Démineur - Règles et commandes\n\n" +
+            "Objectif : révéler toutes les cases sans déclencher une bombe.\n\n" +
+            "️ Commandes :\n" +
+            "- Clic gauche : révéler une case.\n" +
+            "- Clic droit : poser / enlever un drapeau .\n\n" +
+            " Début de partie :\n" +
+            "- Les bombes sont placées au premier clic.\n" +
+            "- La zone 3×3 autour du premier clic est protégée.\n\n" +
+            " Drapeaux :\n" +
+            "- Tu as " + nbBombes + " drapeaux max (comme le nombre de bombes).\n" +
+            "- Tu ne peux pas descendre sous 0.\n\n" +
+            "️ Chrono :\n" +
+            "- Démarre au premier clic.\n" +
+            "- S’arrête en cas de victoire ou défaite.\n\n" +
+            "? Boutons :\n" +
+            "- Recommencer : relance une partie du même niveau.\n" +
+            "- Menu : retour à l’accueil.\n";
+
+    JOptionPane.showMessageDialog(this, message, "Info - Aide", JOptionPane.INFORMATION_MESSAGE);
+
+
+    }//GEN-LAST:event_bouton_infoActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanneauGrille;
+    private javax.swing.JButton bouton_info;
     private javax.swing.JButton bouton_menu;
     private javax.swing.JButton bouton_recommencer;
     private javax.swing.JLabel drapeaux;

@@ -143,9 +143,7 @@ public class GrilleDeJeu {
         }
     }
 
-    // -----------------------------
-    // UTILES POUR LA PARTIE
-    // -----------------------------
+
     public boolean getPresenceBombe(int i, int j) {
         return matriceCellules[i][j].getPresenceBombe();
     }
@@ -164,9 +162,7 @@ public class GrilleDeJeu {
         return true;
     }
 
-    // -----------------------------
-    // AFFICHAGE GRILLE CONSOLE
-    // -----------------------------
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -190,10 +186,45 @@ public class GrilleDeJeu {
 
         return sb.toString();
     }
+    
+    public String getAffichageCellule(int i, int j) {
+        return matriceCellules[i][j].toString();
+    }
 
-    // -----------------------------
-    // MAIN DE TEST (simple)
-    // -----------------------------
+    public void placerBombesAleatoirementEnEvitantZone(int ligneDepart, int colonneDepart) {
+        Random generateurAleatoire = new Random();
+        int bombesPlacees = 0;
+
+        while (bombesPlacees < nbBombes) {
+            int ligne = generateurAleatoire.nextInt(nbLignes);
+            int colonne = generateurAleatoire.nextInt(nbColonnes);
+
+            
+            boolean estDansZoneInterdite =
+                    Math.abs(ligne - ligneDepart) <= 1 &&
+                    Math.abs(colonne - colonneDepart) <= 1;
+
+            if (estDansZoneInterdite) {
+                continue;
+            }
+
+            if (!matriceCellules[ligne][colonne].getPresenceBombe()) {
+                matriceCellules[ligne][colonne].placerBombe();
+                bombesPlacees++;
+            }
+        }
+    } 
+    public void basculerDrapeau(int ligne, int colonne) {
+        if (ligne < 0 || ligne >= nbLignes || colonne < 0 || colonne >= nbColonnes) {
+            return;
+        }
+        matriceCellules[ligne][colonne].basculerDrapeau();
+    }
+
+    public boolean getPresenceDrapeau(int ligne, int colonne) {
+        return matriceCellules[ligne][colonne].getPresenceDrapeau();
+    }
+    
     public static void main(String[] args) {
 
         GrilleDeJeu g = new GrilleDeJeu(5, 5, 5);
@@ -208,9 +239,5 @@ public class GrilleDeJeu {
         System.out.println("Après révélation (2,2) :");
         System.out.println(g);
     }
-    public String getAffichageCellule(int i, int j) {
-    return matriceCellules[i][j].toString();
-}
-
 }
 

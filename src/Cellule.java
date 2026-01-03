@@ -9,25 +9,24 @@
  */
 public class Cellule {
 
-    // -----------------------------
-    // ATTRIBUTS
-    // -----------------------------
+
     private boolean presenceBombe;
     private boolean devoilee;
     private int nbBombesAdjacentes;
 
-    // -----------------------------
-    // CONSTRUCTEUR
-    // -----------------------------
+    private boolean presenceDrapeau;
+
+
     public Cellule() {
         this.presenceBombe = false;
         this.devoilee = false;
         this.nbBombesAdjacentes = 0;
+
+       
+        this.presenceDrapeau = false;
     }
 
-    // -----------------------------
-    // ACCESSEURS EN LECTURE
-    // -----------------------------
+  
     public boolean getPresenceBombe() {
         return presenceBombe;
     }
@@ -36,32 +35,46 @@ public class Cellule {
         return nbBombesAdjacentes;
     }
 
-    // -----------------------------
-    // ACCESSEUR EN ECRITURE
-    // -----------------------------
+
+    public boolean getPresenceDrapeau() {
+        return presenceDrapeau;
+    }
+
+
     public void setNbBombesAdjacentes(int nb) {
         this.nbBombesAdjacentes = nb;
     }
 
-    // -----------------------------
-    // METHODES
-    // -----------------------------
+    
     public void placerBombe() {
         this.presenceBombe = true;
     }
 
     public void revelerCellule() {
+        
+        if (presenceDrapeau) {
+            return;
+        }
         this.devoilee = true;
     }
 
-    // -----------------------------
-    // AFFICHAGE CONSOLE
-    // -----------------------------
+  
+    public void basculerDrapeau() {
+        if (devoilee) {
+            return;
+        }
+        presenceDrapeau = !presenceDrapeau;
+    }
+
+
     @Override
     public String toString() {
 
         // Cellule non dévoilée
         if (!devoilee) {
+            if (presenceDrapeau) {
+                return "F"; // Flag (drapeau)
+            }
             return "?";
         }
 
@@ -75,13 +88,13 @@ public class Cellule {
             return String.valueOf(nbBombesAdjacentes);
         }
 
-        // Cellule vide (0 bombe adjacente)
-        return " ";
+        // Cellule vide 
+        return "0";
     }
 
-    // -----------------------------
-    // MAIN DE TEST (OBLIGATOIRE)
-    // -----------------------------
+
+
+
     public static void main(String[] args) {
 
         Cellule c = new Cellule();

@@ -74,21 +74,21 @@ public class AccueilDemineur extends javax.swing.JFrame {
             lignes = 8;
             colonnes = 8;
             bombes = 10;
-        } else if (niveau.equals("Moyen")) {
+        } else if (niveau.equals("Normal")) {
             lignes = 10;
             colonnes = 10;
-            bombes = 15;
+            bombes = 20;
         } else { // Difficile
-            lignes = 12;
-            colonnes = 12;
-            bombes = 25;
+            lignes = 14;
+            colonnes = 14;
+            bombes = 30;
         }
 
-        // Ouvre la fenêtre de jeu avec ces paramètres
+        
         interface_graphique fenetreJeu = new interface_graphique(lignes, colonnes, bombes);
         fenetreJeu.setVisible(true);
 
-        // Ferme l'écran d'accueil
+        
         this.dispose();
 
     }//GEN-LAST:event_bouton_commencerActionPerformed
