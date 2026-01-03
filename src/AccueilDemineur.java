@@ -13,7 +13,8 @@ public class AccueilDemineur extends javax.swing.JFrame {
 
     public AccueilDemineur() {
         initComponents();
-        setLocationRelativeTo(null); 
+        setLocationRelativeTo(null);
+        jTextArea1.setEditable(false);        
     }
 
     /**
@@ -31,6 +32,7 @@ public class AccueilDemineur extends javax.swing.JFrame {
         bouton_commencer = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         combo_niveau = new javax.swing.JComboBox<>();
+        Label_image = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -40,7 +42,7 @@ public class AccueilDemineur extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Bienvenue dans le jeu du Démineur.\nCliquez sur Commencer pour lancer une partie.");
+        jTextArea1.setText("Bienvenue dans le jeu du Démineur.\nChosissez un niveau et Cliquez sur Commencer pour lancer une partie.\nBonne Chance");
         jScrollPane1.setViewportView(jTextArea1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 300, -1));
@@ -58,6 +60,9 @@ public class AccueilDemineur extends javax.swing.JFrame {
 
         combo_niveau.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facile", "Normal", "Difficle", "" }));
         getContentPane().add(combo_niveau, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, -1, -1));
+
+        Label_image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/demineur25.jpg"))); // NOI18N
+        getContentPane().add(Label_image, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 260, 200));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -104,6 +109,7 @@ public class AccueilDemineur extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Label_image;
     private javax.swing.JButton bouton_commencer;
     private javax.swing.JComboBox<String> combo_niveau;
     private javax.swing.JLabel jLabel1;
